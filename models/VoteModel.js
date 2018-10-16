@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
-const VoteSchema = new mongoose.Schema({
-  choice: { type: String },
+const VoteSchema = mongoose.Schema({
+  choice: { type: String, index: true },
 });
 
-mongoose.export = mongoose.model('Vote', VoteSchema);
+module.exports = mongoose.model('Vote', VoteSchema);
