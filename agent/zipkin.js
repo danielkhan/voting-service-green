@@ -6,8 +6,8 @@ const {
 } = require('zipkin');
 
 const zipkinMiddleware = require('zipkin-instrumentation-express').expressMiddleware;
-const wrapRequest = require('zipkin-instrumentation-request');
-const request = require('request');
+// const wrapRequest = require('zipkin-instrumentation-request');
+// const request = require('request');
 const CLSContext = require('zipkin-context-cls');
 const localServiceName = 'express-frontend'; 
 
@@ -29,6 +29,6 @@ const tracer = new Tracer({
 module.exports = (localServiceName) => {
   return {
     middleware: () => zipkinMiddleware({ tracer }),
-    request: (remoteServiceName) => wrapRequest(request, { tracer, remoteServiceName }),
+    // request: (remoteServiceName) => wrapRequest(request, { tracer, remoteServiceName }),
   }
 } 
