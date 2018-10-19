@@ -6,9 +6,10 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 const indexRouter = require('./routes/index');
 mongoose.connect('mongodb://localhost:27017/votings');
-
+const zipkinMiddleware = require('./agent/zipkin');
 const app = express();
 
+app.use(zipkinMiddleware('service-green'));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
