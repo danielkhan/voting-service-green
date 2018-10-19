@@ -1,3 +1,5 @@
+const zipkin = require('./agent/zipkin')('service-green');
+
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -6,10 +8,9 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 const indexRouter = require('./routes/index');
 mongoose.connect('mongodb://localhost:27017/votings');
-const zipkinMiddleware = require('./agent/zipkin');
 const app = express();
 
-app.use(zipkinMiddleware('service-green'));
+app.use(zipkin.middleware());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
