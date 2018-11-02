@@ -1,22 +1,23 @@
 // // const zipkin = require('./agent/zipkin')('service-green');
 const initTracer = require('jaeger-client').initTracer;
+const Tracer = require('@risingstack/jaeger')
 
 const PrometheusMetricsFactory = require('jaeger-client').PrometheusMetricsFactory;
 const promClient = require('prom-client');
 
 const config = {
-  serviceName: 'service_green',
+  serviceName: 'service-green',
 };
 const namespace = config.serviceName;
-const metrics = new PrometheusMetricsFactory(promClient, namespace);
+const metrics = new PrometheusMetricsFactory(promClient, 'service_green');
 const options = {
   tags: {
-    'service-green.version': '1.0.1',
+    'service_green.version': '1.0.2',
   },
   metrics,
   // logger: logger,
 };
-const tracer = initTracer(config, options);
+const tracer = new Tracer(config, options);
 
 const createError = require('http-errors');
 const express = require('express');
