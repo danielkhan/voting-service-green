@@ -30,7 +30,7 @@ module.exports = (localServiceName) => {
   });
   
   return {
-    const redis: = () => zipkinClient(tracer, Redis, redisConnectionOptions),
+    const redis: () => zipkinClient(tracer, Redis, redisConnectionOptions),
     middleware: () => zipkinMiddleware({ tracer }),
   }
 } 
