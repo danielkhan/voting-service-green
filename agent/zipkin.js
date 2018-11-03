@@ -9,6 +9,7 @@ const zipkinMiddleware = require('zipkin-instrumentation-express').expressMiddle
 const CLSContext = require('zipkin-context-cls');
 const localServiceName = 'express-frontend'; 
 const redisZipkin = require('zipkin-instrumentation-redis');
+const Redis = require('redis');
 
 const { HttpLogger } = require('zipkin-transport-http');
 const redisConnectionOptions = {
@@ -30,7 +31,7 @@ module.exports = (localServiceName) => {
   });
   
   return {
-    redis: () => zipkinClient(tracer, Redis, redisConnectionOptions),
+    redis: () => redisZipkin(tracer, Redis, redisConnectionOptions),
     middleware: () => zipkinMiddleware({ tracer }),
   }
 } 
