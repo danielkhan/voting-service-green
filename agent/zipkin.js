@@ -31,7 +31,7 @@ module.exports = (localServiceName) => {
   });
   
   return {
-    redis: () => Redis.createClient(); // redisZipkin(tracer, Redis, redisConnectionOptions),
+    redis: () => Redis.createClient(), // redisZipkin(tracer, Redis, redisConnectionOptions),
     middleware: () => zipkinMiddleware({ tracer }),
   }
 } 
