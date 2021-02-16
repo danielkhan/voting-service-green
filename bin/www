@@ -1,4 +1,8 @@
 #!/usr/bin/env node
+const tracer = require('dd-trace').init({
+  analytics: true
+});
+
 
 /**
  * Module dependencies.
