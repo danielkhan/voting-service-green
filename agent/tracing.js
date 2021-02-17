@@ -13,28 +13,22 @@ const { JaegerExporter } = require("@opentelemetry/exporter-jaeger");
 let _serviceName = "";
 
 const provider = new NodeTracerProvider();
-provider.register();
 
 module.exports.init = (serviceName) => {
   _serviceName = serviceName;
+  provider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));
+
+  // Enable jaeger exporter
+  const options = {
+    serviceName: _serviceName,
+    host: "localhost",
+    port: 6832,
+  };
+  const jaegerExporter = new JaegerExporter(options);
+  provider.addSpanProcessor(new SimpleSpanProcessor(jaegerExporter));
+  provider.register();
 };
 
 module.exports.getTracer = (name) => {
   return opentelemetry.trace.getTracer(name);
-};
-
-module.exports.enableConsoleExporter = () => {
-  // Also add console exporter - at least for debugging
-  provider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));
-};
-
-module.exports.enableJaegerExporter = () => {
-  // Enable jaeger exporter
-  const options = {
-    serviceName: _serviceName,
-    // host: process.env.JAEGER_AGENT_HOST,
-    // port: process.env.JAEGER_AGENT_PORT,
-  };
-  const jaegerExporter = new JaegerExporter(options);
-  provider.addSpanProcessor(new SimpleSpanProcessor(jaegerExporter));
 };

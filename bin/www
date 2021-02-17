@@ -2,10 +2,6 @@
 const tracing = require("../agent/tracing");
 tracing.init("service-green");
 
-const tracer = tracing.getTracer("service-green");
-tracing.enableConsoleExporter();
-tracing.enableJaegerExporter();
-
 /**
  * Module dependencies.
  */
