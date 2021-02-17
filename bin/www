@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const tracing = require("./agent/tracing");
+const tracing = require("../agent/tracing");
 tracing.init("service-green");
 
 const tracer = tracing.getTracer("service-green");
