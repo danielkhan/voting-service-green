@@ -1,21 +1,23 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-
-const VoteModel = require('../models/VoteModel');
+const { MongoClient } = require("mongodb");
+const uri = "mongodb://localhost";
+const client = new MongoClient(uri);
 
 /* GET home page. */
-router.get('/', async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
+    await client.connect({ useNewUrlParser: true });
+    const database = client.db("voting");
+    const votes = database.collection("votes");
+
     if (req.query.choice) {
-      const newVote = new VoteModel({ choice: req.query.choice });
-      const saveRes = await newVote.save();
+      await votes.insertOne({ choice: req.query.choice });
     }
-
-    const spaces = await VoteModel.count({ choice: 'spaces' }).exec();
-    const tabs = await VoteModel.count({ choice: 'tabs' }).exec();
-
+    const spaces = await votes.countDocuments({ choice: "spaces" });
+    const tabs = await votes.countDocuments({ choice: "tabs" });
     return res.json({ spaces, tabs });
-  } catch(err) {
+  } catch (err) {
     console.log(err);
     return next(err);
   }
