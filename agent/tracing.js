@@ -19,11 +19,13 @@ const provider = new NodeTracerProvider({
       path: "@opentelemetry/plugin-mongodb",
       enhancedDatabaseReporting: true,
     },
+    /*
     mongoose: {
       enabled: true,
       path: "@wdalmut/opentelemetry-plugin-mongoose",
       enhancedDatabaseReporting: true,
     },
+    */
     http: {
       enabled: true,
       path: "@opentelemetry/plugin-http",
