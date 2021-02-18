@@ -1,6 +1,4 @@
-#!/usr/bin/env node
 const tracing = require("../agent/tracing");
-tracing.init("service-green");
 
 /**
  * Module dependencies.
