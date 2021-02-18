@@ -12,7 +12,28 @@ const { JaegerExporter } = require("@opentelemetry/exporter-jaeger");
 
 let _serviceName = "";
 
-const provider = new NodeTracerProvider();
+const provider = new NodeTracerProvider({
+  plugins: {
+    mongodb: {
+      enabled: true,
+      path: "@opentelemetry/plugin-mongodb",
+      enhancedDatabaseReporting: true,
+    },
+    mongoose: {
+      enabled: true,
+      path: "@wdalmut/opentelemetry-plugin-mongoose",
+      enhancedDatabaseReporting: true,
+    },
+    http: {
+      enabled: true,
+      path: "@opentelemetry/plugin-http",
+    },
+    express: {
+      enabled: true,
+      path: "@opentelemetry/plugin-express",
+    },
+  },
+});
 
 module.exports.init = (serviceName) => {
   _serviceName = serviceName;
@@ -21,8 +42,6 @@ module.exports.init = (serviceName) => {
   // Enable jaeger exporter
   const options = {
     serviceName: _serviceName,
-    host: "localhost",
-    port: 6832,
   };
   const jaegerExporter = new JaegerExporter(options);
   provider.addSpanProcessor(new SimpleSpanProcessor(jaegerExporter));
