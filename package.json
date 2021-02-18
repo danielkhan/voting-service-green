@@ -6,7 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "@opentelemetry/api": "^0.16.0",
+    "@opentelemetry/api": "^0.15.0",
     "@opentelemetry/exporter-jaeger": "^0.16.0",
     "@opentelemetry/node": "^0.16.0",
     "@opentelemetry/plugin-dns": "^0.13.1",
